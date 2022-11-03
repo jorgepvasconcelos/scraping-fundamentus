@@ -1,9 +1,23 @@
+from __future__ import annotations
+
 import os
+import json
+
+import pandas
 
 
 def create_dirs():
-    if not os.path.exists('./json'):
-        os.mkdir('json')
+    dir_name = ['excel', 'json']
+    for name in dir_name:
+        if not os.path.exists(f'./{name}'):
+            os.mkdir(f'{name}')
 
-    if not os.path.exists('./excel'):
-        os.mkdir('excel')
+
+def create_excel(data: dict | list, file_name: str):
+    df = pandas.DataFrame(data)
+    df.to_excel(f'excel/{file_name}.xlsx', index=False)
+
+
+def create_json(data: dict | list, file_name: str):
+    with open(f'json/{file_name}.json', 'w') as file:
+        json.dump(data, file, indent=2)

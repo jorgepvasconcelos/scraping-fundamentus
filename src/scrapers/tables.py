@@ -2,7 +2,7 @@ import requests
 from parsel import Selector
 
 
-def get_acoes() -> list:
+def scrape_acoes_table() -> list:
     headers = {
         'authority': 'fundamentus.com.br',
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
@@ -67,7 +67,8 @@ def get_acoes() -> list:
         'y': '9',
     }
 
-    response = requests.post('https://fundamentus.com.br/resultado.php', headers=headers, data=data)
+    url = 'https://fundamentus.com.br/resultado.php'
+    response = requests.post(url=url, headers=headers, data=data)
 
     selector = Selector(text=response.text)
 
@@ -94,7 +95,7 @@ def get_acoes() -> list:
                 "LIQ CORR": linha.css('td:nth-child(15)::text').get(),
                 "ROIC %": linha.css('td:nth-child(16)::text').get(),
                 "ROE %": linha.css('td:nth-child(17)::text').get(),
-                "LIQ 2M": linha.css('td:nth-child(18)::text').get(),
+                "LIQUIDEZ": linha.css('td:nth-child(18)::text').get(),
                 "PATRIM LIQ": linha.css('td:nth-child(19)::text').get(),
                 "DIV BRUTA/PATRIM": linha.css('td:nth-child(20)::text').get(),
                 "CRESC REC 5A %": linha.css('td:nth-child(21)::text').get(),
@@ -103,7 +104,7 @@ def get_acoes() -> list:
     return acoes
 
 
-def get_fiis() -> list:
+def scrape_fiis_table() -> list:
     headers = {
         'authority': 'fundamentus.com.br',
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
@@ -148,7 +149,8 @@ def get_fiis() -> list:
         'y': '18',
     }
 
-    response = requests.post('https://fundamentus.com.br/fii_resultado.php', headers=headers, data=data)
+    url = 'https://fundamentus.com.br/fii_resultado.php'
+    response = requests.post(url=url, headers=headers, data=data)
 
     selector = Selector(text=response.text)
 
@@ -174,6 +176,3 @@ def get_fiis() -> list:
             }
         )
     return fiis
-
-
-

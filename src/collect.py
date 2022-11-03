@@ -1,36 +1,66 @@
-import json
+from __future__ import annotations
 
-import pandas
-
-from src.fundamentus_scraping import get_acoes, get_fiis
+from src.scrapers.rendimentos_acoes import scrape_rendimentos_acoes
+from src.scrapers.tables import scrape_acoes_table, scrape_fiis_table
 from src.transform import transform_values
-from src.utils import create_dirs
+from src.utils import create_json, create_excel
 
 
-def acoes():
-    data = get_acoes()
+def todos_os_codigos(acoes, fiis) -> list[str]:
+    file_name = 'todos_os_codigos'
+
+    list_of_data = []
+    list_of_data.extend(acoes)
+    list_of_data.extend(fiis)
+
+    codigos = [v['CODIGO'] for v in list_of_data]
+    create_json(data=codigos, file_name=file_name)
+    return codigos
+
+
+def acoes_table() -> list:
+    file_name = 'acoes_table'
+
+    # Extractc
+    data = scrape_acoes_table()
+
+    # Transform
     data = transform_values(data_list=data)
 
-    with open('json/acoes.json', 'w') as file:
-        json.dump(data, file, indent=2)
+    # Load
+    create_json(data=data, file_name=file_name)
+    create_excel(data=data, file_name=file_name)
 
-    df = pandas.DataFrame(data)
-    df.to_excel('excel/acoes.xlsx', index=False)
+    return data
 
 
-def fiis():
-    data = get_fiis()
+def fiis_table() -> list:
+    file_name = 'fiis_table'
+
+    # Extractc
+    data = scrape_fiis_table()
+
+    # Transform
     data = transform_values(data_list=data)
 
-    with open('json/fiis.json', 'w') as file:
-        json.dump(data, file, indent=2)
+    # Load
+    create_json(data=data, file_name=file_name)
+    create_excel(data=data, file_name=file_name)
 
-    df = pandas.DataFrame(data)
-    df.to_excel('excel/fiis.xlsx', index=False)
+    return data
 
 
-if __name__ == '__main__':
-    create_dirs()
+def acoes_rendimentos(codigos : list) -> list:
+    file_name = 'acoes_rendimentos'
 
-    fiis()
-    acoes()
+    # Extractc
+    data = scrape_rendimentos_acoes(codigos=codigos)
+
+    # # Transform
+    # data = transform_values(data_list=data)
+    #
+    # # Load
+    # create_json(data=data, file_name=file_name)
+    # create_excel(data=data, file_name=file_name)
+
+    return data
