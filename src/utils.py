@@ -21,3 +21,11 @@ def create_excel(data: dict | list, file_name: str):
 def create_json(data: dict | list, file_name: str):
     with open(f'json/{file_name}.json', 'w') as file:
         json.dump(data, file, indent=2)
+
+
+def somente_acoes(codigos: list):
+    codigos_validos = []
+    for codigo in codigos:
+        if codigo[-1].isnumeric():
+            codigos_validos.append(codigo)
+    return codigos_validos

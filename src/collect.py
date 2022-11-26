@@ -3,7 +3,7 @@ from __future__ import annotations
 from src.scrapers.rendimentos_acoes import scrape_rendimentos_acoes
 from src.scrapers.tables import scrape_acoes_table, scrape_fiis_table
 from src.transform import transform_values
-from src.utils import create_json, create_excel
+from src.utils import create_json, create_excel, somente_acoes
 
 
 def todos_os_codigos(acoes, fiis) -> list[str]:
@@ -14,6 +14,7 @@ def todos_os_codigos(acoes, fiis) -> list[str]:
     list_of_data.extend(fiis)
 
     codigos = [v['CODIGO'] for v in list_of_data]
+    codigos = somente_acoes(codigos)
     create_json(data=codigos, file_name=file_name)
     return codigos
 
