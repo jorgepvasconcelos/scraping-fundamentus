@@ -8,7 +8,7 @@ def main():
     acoes_table_data = acoes_table()
     fiis_table_data = fiis_table()
     codigos = todos_os_codigos(acoes_table_data, fiis_table_data)
-
+    return print('ddddddddddd')
     acoes_rendimentos_date = acoes_rendimentos(codigos)
 
 
