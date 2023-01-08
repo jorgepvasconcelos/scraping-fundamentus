@@ -1,14 +1,14 @@
 import copy
 
 
-def tranform_percentage_in_float(value: str) -> float:
+def parse_percentage_to_float(value: str) -> float:
     value = value.replace("%", '')
     # value = value.replace(",", '.')
     # return float(value)
-    return tranform_in_float(value)
+    return parse_string_to_float(value)
 
 
-def tranform_in_float(value: str) -> float:
+def parse_string_to_float(value: str) -> float:
     if value.count(',') == 1 and value.count('.') == 0:
         "84,98"
         value = value.replace(",", '.')
@@ -16,6 +16,7 @@ def tranform_in_float(value: str) -> float:
 
     if value.count('.') == 1 and value.count(',') == 0:
         "106.461"
+        value = value.replace(".", '')
         return float(value)
 
     if value.count('.') == 1 and value.count(',') == 1:
@@ -26,8 +27,7 @@ def tranform_in_float(value: str) -> float:
 
     if value.count('.') > 1 and value.count(',') == 0:
         "927.491.000"
-        dot_qtd = value.count(".")
-        value = value.replace(".", "", dot_qtd - 1)
+        value = value.replace(".", "",)
         return float(value)
 
     if value.count('.') > 1 and value.count(',') == 1:
@@ -47,10 +47,10 @@ def transform_values(data_list: list[dict]) -> list[dict]:
     for index, data in enumerate(data_list):
         for key, value in data.items():
             if "%" in key:
-                data_trasnformed[index][key] = tranform_percentage_in_float(value)
+                data_trasnformed[index][key] = parse_percentage_to_float(value)
                 continue
             if not key in not_number_column:
-                data_trasnformed[index][key] = tranform_in_float(value)
+                data_trasnformed[index][key] = parse_string_to_float(value)
                 continue
 
     return data_trasnformed
