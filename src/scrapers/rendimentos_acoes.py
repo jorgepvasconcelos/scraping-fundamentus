@@ -1,11 +1,11 @@
-import requests
+import httpx
 from parsel import Selector
 
 
 def scrape_rendimentos_acoes(codigos: list[str]):
     for codigo in codigos:
         url = f'https://www.fundamentus.com.br/proventos.php?papel={codigo}'
-        response = requests.post(url=url)
+        response = httpx.post(url=url)
 
         selector = Selector(text=response.text)
 

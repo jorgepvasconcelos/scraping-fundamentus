@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from src.scrapers.rendimentos_acoes import scrape_rendimentos_acoes
 from src.scrapers.tables import scrape_acoes_table, scrape_fiis_table
 from src.transform import transform_values

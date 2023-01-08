@@ -1,4 +1,4 @@
-import requests
+import httpx
 from parsel import Selector
 
 
@@ -68,7 +68,7 @@ def scrape_acoes_table() -> list:
     }
 
     url = 'https://fundamentus.com.br/resultado.php'
-    response = requests.post(url=url, headers=headers, data=data)
+    response = httpx.post(url=url, headers=headers, data=data)
 
     selector = Selector(text=response.text)
 
@@ -150,7 +150,7 @@ def scrape_fiis_table() -> list:
     }
 
     url = 'https://fundamentus.com.br/fii_resultado.php'
-    response = requests.post(url=url, headers=headers, data=data)
+    response = httpx.post(url=url, headers=headers, data=data)
 
     selector = Selector(text=response.text)
 
