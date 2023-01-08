@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "scraping-fundamentus"
+version = "0.1.0"
+description = ""
+authors = [""]
+readme = "README.md"
+packages = [{include = "scraping_fundamentus"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+parsel = "*"
+pandas = "*"
+httpx = "*"
+openpyxl = "^3.0.10"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
